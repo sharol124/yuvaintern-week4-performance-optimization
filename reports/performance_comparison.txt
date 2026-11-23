@@ -1,0 +1,81 @@
+# PERFORMANCE COMPARISON REPORT
+## Student Management System – Python Optimization
+
+### 1. Project Overview
+
+The purpose of this project was to improve the performance of a Python-based Student Management System. The original application was analyzed using profiling tools, and inefficient operations were optimized to reduce execution time.
+
+### 2. Benchmark Configuration
+
+- Programming Language: Python
+- Python Version: 3.10.11
+- Dataset Size: 10,000 student records
+- Number of Benchmark Runs: 3
+- Benchmarking Tool: time.perf_counter()
+- Memory Measurement: tracemalloc
+- Profiling Tool: cProfile
+
+### 3. Performance Results
+
+| Metric | Original Application | Optimized Application |
+|---|---:|---:|
+| Average Execution Time | 64.853479 seconds | 0.120483 seconds |
+| Peak Memory Usage | 3.3664 MB | 3.6284 MB |
+
+### 4. Performance Improvement
+
+Execution Time Improvement: 99.81%
+
+Speedup: 538.28 times faster.
+
+The optimized application significantly reduced execution time compared to the original implementation.
+
+### 5. Identified Performance Bottlenecks
+
+Profiling the original application identified Bubble Sort as the primary performance bottleneck.
+
+The original sorting method used nested loops, resulting in O(n²) time complexity.
+
+Linear searching also required checking student records one by one.
+
+### 6. Optimization Techniques Applied
+
+1. Replaced Bubble Sort with Python's built-in sorted() function, which uses Timsort.
+2. Introduced a dictionary-based student index to improve student searching.
+3. Used Python's built-in sum() function for average calculation.
+4. Retained the same student data and application functionality.
+5. Used profiling and benchmarking to measure the improvements.
+
+### 7. Profiling Comparison
+
+Original Application:
+- Total profiled execution time: 7.285 seconds.
+- Bubble Sort consumed approximately 7.237 seconds.
+
+Optimized Application:
+- Total profiled execution time: 0.093 seconds.
+- Student generation became the largest remaining operation, taking approximately 0.071 seconds.
+
+### 8. Memory Usage Analysis
+
+The optimized application used slightly more memory because it maintains an additional dictionary index for faster searching.
+
+The memory usage increased from 3.3664 MB to 3.6284 MB. This is a small trade-off for the substantial improvement in execution speed.
+
+### 9. Testing and Verification
+
+Automated tests were performed using Python's unittest framework.
+
+Results:
+- Original Student Manager: PASS
+- Optimized Student Manager: PASS
+- Total tests executed: 2
+- Failed tests: 0
+
+Both implementations passed the functionality tests.
+
+### 10. Conclusion
+
+The project successfully improved the performance of the Student Management System. Replacing inefficient algorithms and introducing efficient data structures reduced execution time by 99.81%.
+
+The optimized implementation maintained the tested functionality while providing significantly faster execution. Profiling, benchmarking, and automated testing were used to validate the improvements.

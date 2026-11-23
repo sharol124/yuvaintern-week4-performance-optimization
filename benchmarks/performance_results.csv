@@ -1,0 +1,3 @@
+Application,Average Execution Time (seconds),Peak Memory (MB)
+Original,64.853479,3.3664
+Optimized,0.120483,3.6284

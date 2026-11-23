@@ -1,0 +1,77 @@
+WEEK 4 PROJECT REPORT
+Performance Optimization
+in Python Applications
+Student Management System
+Internship: Junior Python Developer
+Organization: YuvaIntern
+Technology: Python 3.10.11
+Benchmark dataset: 10,000 student records
+
+ 1. Abstract
+This project focuses on analyzing and improving the performance of a Python-based Student Management System. The original implementation was profiled to identify time-consuming operations. The profiling results showed that the Bubble Sort implementation was the main performance bottleneck. The sorting operation was replaced with Python's built-in sorted() function, and a dictionary-based index was introduced to support faster student lookups. The original and optimized versions were benchmarked using the same 10,000-record workload over three runs. The measured average execution time decreased from 64.853479 seconds to 0.120483 seconds, an improvement of approximately 99.81%. Automated tests were also run against both implementations to check key functionality.
+2. Introduction
+Application performance is important when programs process larger amounts of data. An implementation that works correctly with a small dataset may become slow as the dataset grows. Profiling helps locate operations that consume significant execution time, while benchmarking provides measurable evidence of the effect of changes. This project applies those techniques to a Student Management System that generates, searches, summarizes, and sorts student records.
+3. Objectives
+•	Examine the original Student Management System and identify performance bottlenecks.
+•	Measure execution time and memory usage for a repeatable workload.
+•	Improve inefficient operations using suitable Python features and data structures.
+•	Compare the original and optimized implementations using the same benchmark setup.
+•	Use automated tests to check that the main functionality remains available.
+4. Application Overview
+The application manages student records containing an ID, a name, and marks. The operations used in the performance workload are:
+•	Generate student records.
+•	Search for a student using the student's ID.
+•	Calculate the average marks.
+•	Find the top students.
+•	Sort all students by marks in descending order.
+The benchmark workload generated 10,000 records and then executed the search, average calculation, top-student selection, and sorting operations.
+5. Baseline Profiling and Bottleneck Analysis
+The original application was profiled using cProfile. The baseline profile reported approximately 129,433 function calls in 7.285 seconds for the profiled run. The sort_students_by_marks() method, which used Bubble Sort, accounted for approximately 7.237 seconds of exclusive function time and 7.239 seconds cumulative time.
+Bubble Sort uses nested comparisons and has O(n²) time complexity. This makes it inefficient for sorting a large collection of records. The original search operation also used a linear scan through the student list.
+6. Optimization Techniques
+6.1 Replace Bubble Sort with sorted()
+The optimized implementation uses Python's built-in sorted() function to sort student records by marks in descending order. Python's sorting implementation uses Timsort, which is substantially more efficient for large lists than the original Bubble Sort approach.
+6.2 Dictionary-Based Student Index
+The optimized implementation maintains a dictionary index keyed by student ID. This allows the search method to retrieve a student by key rather than scanning the full list. Dictionary lookup is O(1) on average, while a linear list search is O(n) on average.
+6.3 Built-in Sum for Average Calculation
+The optimized implementation uses Python's built-in sum() with a generator expression to calculate total marks, followed by division by the number of students.
+7. Benchmarking Methodology
+The benchmark script used time.perf_counter() to measure elapsed time and tracemalloc to measure peak traced Python memory. Both implementations were run with the same dataset size and operations. Each implementation was measured over three runs, and the average execution time was calculated.
+•	Python version: 3.10.11
+•	Dataset size: 10,000 student records
+•	Number of benchmark runs: 3
+•	Timing method: time.perf_counter()
+•	Memory measurement: tracemalloc
+•	Profiling tool: cProfile
+8. Before-and-After Results
+Metric	Original	Optimized
+Average execution time	64.853479 sec	0.120483 sec
+Peak memory usage	3.3664 MB	3.6284 MB
+
+Execution-time improvement: 99.81%
+Measured speedup: approximately 538.28×
+The optimized version used approximately 0.262 MB more peak traced memory. This small increase is consistent with maintaining an additional dictionary index. The memory figure is traced Python allocation measured by tracemalloc; it is not a measurement of total system RAM.
+9. Optimized Profiling Results
+The optimized application profile reported approximately 129,435 function calls in 0.093 seconds. Student generation was the largest remaining operation, with approximately 0.071 seconds cumulative time. The sorting and top-student operations each took approximately 0.006 seconds cumulative time in this profile. This shows that the original sorting bottleneck was substantially reduced.
+10. Testing and Verification
+Automated tests were executed using Python's unittest framework. The tests checked student generation, searching, average calculation, top-student ordering, and sorting for both the original and optimized managers.
+Test	Result	Details
+Original manager	PASS	Core operations checked
+Optimized manager	PASS	Core operations checked
+Total test methods	2 passed	0 failures
+The command used was: python -m unittest discover -s tests -v. The test run completed successfully with two tests passing and no failures.
+11. Project Deliverables
+•	original/student_manager_original.py – original implementation.
+•	optimized/student_manager_optimized.py – optimized implementation.
+•	benchmarks/profiling.py – baseline profiling script.
+•	benchmarks/profile_optimized.py – optimized profiling script.
+•	benchmarks/benchmark.py – before-and-after benchmark script.
+•	benchmarks/performance_results.csv – recorded benchmark results.
+•	benchmarks/original_profile.prof – original profiling data.
+•	benchmarks/optimized_profile.prof – optimized profiling data.
+•	tests/test_performance_optimization.py – automated tests.
+•	reports/baseline_analysis.txt and reports/performance_comparison.txt – text analysis reports.
+12. Conclusion
+The project demonstrated how profiling and benchmarking can guide practical performance improvements in Python applications. The original Bubble Sort implementation was identified as the main bottleneck and replaced with Python's built-in sorting functionality. A dictionary index was also added to improve student lookup. Under the recorded benchmark conditions, average execution time decreased from 64.853479 seconds to 0.120483 seconds, representing an improvement of approximately 99.81%. The optimized version used slightly more traced memory, but both original and optimized implementations passed the automated functionality tests. The results show a substantial improvement for the tested workload.
+13. Notes on Reproducibility
+Benchmark values depend on the computer, Python environment, background processes, and measurement conditions. The reported values are the results recorded during this project run. Re-running the benchmark may produce slightly different timings. The comparison is meaningful because both implementations were tested using the same script, dataset size, and number of runs.
